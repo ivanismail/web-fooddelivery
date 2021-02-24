@@ -227,7 +227,7 @@ class Capi extends REST_Controller {
 		    {
 			$json2['bayar']		= $data['totalBayar'];
 			$ongkir             = 0.05 * $data['totalBayar'];
-			$json2['ongkir']	= '3000';
+			$json2['ongkir']	= '2500';
 		    }
 		    
 		    $this->response([
