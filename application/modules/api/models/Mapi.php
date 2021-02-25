@@ -221,7 +221,7 @@ class Mapi extends CI_Model {
 
     public function addTransaction($tgl_pesan,$total_bayar,$alamat_kirim,$latitude,$longitude,$id_pelanggan,$note,$payment,$ongkir,$status)
      {
-        $sql    = "insert into pemesanan (tgl_pesan,total_bayar,latitude,longitude,id_pelanggan,note,payment,ongkir,status) values (?,?,?,?,?,?,?,?,?,?)";
+        $sql    = "insert into pemesanan (tgl_pesan,total_bayar,alamat_kirim,latitude,longitude,id_pelanggan,note,payment,ongkir,status) values (?,?,?,?,?,?,?,?,?,?)";
         $query  = $this->db->query($sql,array($tgl_pesan,$total_bayar,$alamat_kirim,$latitude,$longitude,$id_pelanggan,$note,$payment,$ongkir,$status));
         if ($query) {
             $sql2   = "delete from keranjang WHERE id_pelanggan=?";
