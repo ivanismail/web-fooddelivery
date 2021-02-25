@@ -245,7 +245,7 @@ class Capi extends REST_Controller {
 		}
 	}
 
-	public function addLogTransaction_post()
+	public function addTransaction_post()
 	{   
 	$tgl_pesan		    = date('Y-m-d H:i:s');	
 	$total_bayar 		= $this->input->post('total_bayar');
@@ -258,7 +258,7 @@ class Capi extends REST_Controller {
     $ongkir           	= $this->input->post('ongkir');
     $status           	= '1'; 
             
-		$json    	= $this->Mapi->addLogTransaction($tgl_pesan,$total_bayar,$alamat_kirim,$latitude,$longitude,$id_pelanggan,$note,$payment,$ongkir,$status);
+		$json    	= $this->Mapi->addTransaction($tgl_pesan,$total_bayar,$alamat_kirim,$latitude,$longitude,$id_pelanggan,$note,$payment,$ongkir,$status);
 	
 		if ($json) {
 		   	    $this->response([
