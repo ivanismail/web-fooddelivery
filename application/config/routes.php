@@ -66,6 +66,7 @@ $route['delete-item-cart']	    = 'api/Capi/deleteItemCart';
 $route['get-total-item']        = 'api/Capi/getTotalItem';
 $route['get-cart-item']         = 'api/Capi/getCartItem';
 $route['get-total-bayar']       = 'api/Capi/getTotalBayar';
+$route['add-transaction']     	= 'api/Capi/addLogTransaction';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

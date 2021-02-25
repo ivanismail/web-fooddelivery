@@ -244,6 +244,34 @@ class Capi extends REST_Controller {
 		
 		}
 	}
+
+	public function addLogTransaction_post()
+	{   
+	$tgl_pesan		    = date('Y-m-d H:i:s');	
+	$total_bayar 		= $this->input->post('total_bayar');
+    $alamat_kirim       = $this->input->post('alamat_kirim');
+    $latitude           = $this->input->post('latitude');
+    $longitude          = $this->input->post('longitude');
+    $id_pelanggan       = $this->input->post('id_pelanggan');
+    $note           	= $this->input->post('note');
+    $payment           	= $this->input->post('payment');
+    $ongkir           	= $this->input->post('ongkir');
+    $status           	= '1'; 
+            
+		$json    	= $this->Mapi->addLogTransaction($tgl_pesan,$total_bayar,$alamat_kirim,$latitude,$longitude,$id_pelanggan,$note,$payment,$ongkir,$status);
+	
+		if ($json) {
+		   	    $this->response([
+		        'status' => true,
+		        'message' => 'Pesanan berhasil dikirim.'
+		        ],200);
+		}else{
+		    $this->response([
+		        'status' => false,
+		        'message' => 'Pesanan gagal dikirim'
+		        ],400);
+		}
+    }
 	
     
     
