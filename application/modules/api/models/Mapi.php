@@ -223,9 +223,24 @@ class Mapi extends CI_Model {
      {
         $sql    = "insert into pemesanan (tgl_pesan,total_bayar,alamat_kirim,latitude,longitude,id_pelanggan,note,payment,ongkir,status) values (?,?,?,?,?,?,?,?,?,?)";
         $query  = $this->db->query($sql,array($tgl_pesan,$total_bayar,$alamat_kirim,$latitude,$longitude,$id_pelanggan,$note,$payment,$ongkir,$status));
-        if ($query) {
-            $sql2   = "delete from keranjang WHERE id_pelanggan=?";
-            $query2 = $this->db->query($sql,array($id_pelanggan));
+        
+        $sql2 = "select * from keranjang where id_pelanggan=? ";
+        $query2 = $this->db->query($sql2,array($id_pelanggan))->result_array();;
+        if ($query2) {
+            foreach($query2 as $data){
+            $nama_produk= $data['nama_produk'];
+            $harga= $data['harga'];
+            $qty= $data['qty'];
+            $total= $data['total'];
+            $id_pelanggan= $data['id_pelanggan'];
+            $create_at= date('Y-m-d H:i:s');
+            $update_at= date('Y-m-d H:i:s');;
+            }
+            $sql3    = "insert into log_pemesanan (nama_produk,harga,qty,total,id_pelanggan,create_at,update_at) values (?,?,?,?,?,?,?)";
+            $query3  = $this->db->query($sql3,array($nama_produk,$harga,$qty,$total,$id_pelanggan,$create_at,$update_at));
+            
+            $sql4   = "delete from keranjang WHERE id_pelanggan=?";
+            $query4 = $this->db->query($sql4,array($id_pelanggan));
            return $query;
         }
         return false;
