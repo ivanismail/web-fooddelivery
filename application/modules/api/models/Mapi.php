@@ -228,19 +228,21 @@ class Mapi extends CI_Model {
         $query2 = $this->db->query($sql2,array($id_pelanggan))->result_array();;
         if ($query2) {
             foreach($query2 as $data){
-            $nama_produk= $data['nama_produk'];
-            $harga= $data['harga'];
-            $qty= $data['qty'];
-            $total= $data['total'];
-            $id_pelanggan= $data['id_pelanggan'];
+            $nama_produk[]= $data['nama_produk'];
+            $harga[]= $data['harga'];
+            $qty[]= $data['qty'];
+            $total[]= $data['total'];
+            $id_pelanggan[]= $data['id_pelanggan'];
             $create_at= date('Y-m-d H:i:s');
             $update_at= date('Y-m-d H:i:s');;
             }
+            for($i = 0; $i < count($nama_product); $i++){
             $sql3    = "insert into log_pemesanan (nama_produk,harga,qty,total,id_pelanggan,create_at,update_at) values (?,?,?,?,?,?,?)";
-            $query3  = $this->db->query($sql3,array($nama_produk,$harga,$qty,$total,$id_pelanggan,$create_at,$update_at));
-            
+            $query3  = $this->db->query($sql3,array($nama_produk[$i],$harga[$i],$qty[$i],$total[$i],$id_pelanggan[$i],$create_at,$update_at));
+            }
             $sql4   = "delete from keranjang WHERE id_pelanggan=?";
             $query4 = $this->db->query($sql4,array($id_pelanggan));
+
            return $query;
         }
         return false;
