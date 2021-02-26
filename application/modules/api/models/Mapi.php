@@ -225,25 +225,36 @@ class Mapi extends CI_Model {
         $query  = $this->db->query($sql,array($tgl_pesan,$total_bayar,$alamat_kirim,$latitude,$longitude,$id_pelanggan,$note,$payment,$ongkir,$status));
         
         $sql2 = "select * from keranjang where id_pelanggan=? ";
-        $query2 = $this->db->query($sql2,array($id_pelanggan))->result_array();;
+        $query2 = $this->db->query($sql2,array($id_pelanggan))->result_array();
         if ($query2) {
             foreach($query2 as $data){
             $nama_produk[]= $data['nama_produk'];
             $harga[]= $data['harga'];
             $qty[]= $data['qty'];
             $total[]= $data['total'];
-            $id_pelanggan[]= $data['id_pelanggan'];
+            $id_pelanggan= $data['id_pelanggan'];
             $create_at= date('Y-m-d H:i:s');
             $update_at= date('Y-m-d H:i:s');;
             }
-            for($i = 0; $i < count($nama_product); $i++){
-            $sql3    = "insert into log_pemesanan (nama_produk,harga,qty,total,id_pelanggan,create_at,update_at) values (?,?,?,?,?,?,?)";
-            $query3  = $this->db->query($sql3,array($nama_produk[$i],$harga[$i],$qty[$i],$total[$i],$id_pelanggan[$i],$create_at,$update_at));
+            
+            $sql5 = "select kd_pemesanan from pemesanan where id_pelanggan=? order by kd_pemesanan desc limit 1";
+            $query5 = $this->db->query($sql5,array($id_pelanggan))->result_array();
+            foreach($query5 as $data5){
+            $kd_pemesanan= $data5['kd_pemesanan'];
+            }
+            
+            for($i = 0; $i < count($nama_produk); $i++){
+            $sql3    = "insert into log_pemesanan (nama_produk,harga,qty,total,kd_pemesanan,id_pelanggan,create_at,update_at) values (?,?,?,?,?,?,?,?)";
+            $query3  = $this->db->query($sql3,array($nama_produk[$i],$harga[$i],$qty[$i],$total[$i],$kd_pemesanan,$id_pelanggan,$create_at,$update_at));
+            
             }
             $sql4   = "delete from keranjang WHERE id_pelanggan=?";
             $query4 = $this->db->query($sql4,array($id_pelanggan));
-
-           return $query;
+           if($query4){
+                return $query4;
+            }else{
+                return FALSE;
+            }
         }
         return false;
      }
